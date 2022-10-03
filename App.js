@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 // const cookieParser = require("cookie-parser");
 // const { errors } = require("celebrate");
 // const cors = require("cors");
-// const router = require('./routes');
-// const errorHandler = require('./middlewares/error');
+const router = require('./routes');
+const errorHandler = require('./middlewares/error');
 // const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { PORT, MONGO_URI } = require('./utils/constants');
 
@@ -25,10 +25,10 @@ app.use(express.json());
 //   })
 // );
 // app.use(requestLogger);
-// app.use('/', router);
+app.use('/', router);
 // app.use(errorLogger);
 // app.use(errors());
-// app.use(errorHandler);
+app.use(errorHandler);
 
 async function main() {
   await mongoose.connect(MONGO_URI, {
