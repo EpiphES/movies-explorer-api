@@ -7,8 +7,9 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
 const router = require('./routes');
-const errorHandler = require('./middlewares/error');
+const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const rateLimiter = require('./middlewares/rateLimiter');
 const { PORT, MONGO_URI } = require('./utils/constants');
 
 const app = express();
@@ -25,10 +26,17 @@ app.use(
     credentials: true,
   }),
 );
+
 app.use(requestLogger);
+
+app.use(rateLimiter);
+
 app.use('/', router);
+
 app.use(errorLogger);
+
 app.use(errors());
+
 app.use(errorHandler);
 
 async function main() {
