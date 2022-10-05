@@ -11,8 +11,9 @@ const defaultErrorMessage = 'Произошла ошибка на сервере
 const urlRegex = /^http(s)?:\/\/(www\.)?[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]{1,256}\.[a-z]{1,6}\b[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*$/;
 
 const {
+  NODE_ENV = 'development',
   PORT = 3000,
-  MONGO_URI = 'mongodb://localhost:27017/bitfilmsdb',
+  MONGO_URI = 'mongodb://localhost:27017/moviesdb',
   JWT_SECRET = 'never share your secret',
   SALT_ROUNDS = '10',
 } = process.env;
@@ -28,6 +29,7 @@ module.exports = {
   authorizationErrorMessage,
   emailAlreadyRegisteredMessage,
   urlRegex,
+  NODE_ENV,
   PORT,
   MONGO_URI,
   JWT_SECRET,

@@ -11,9 +11,12 @@ const {
   badRequestMessage,
   userNotFoundMessage,
   emailAlreadyRegisteredMessage,
+  NODE_ENV,
   JWT_SECRET,
   SALT_ROUNDS,
 } = require('../utils/constants');
+
+const { JWT_SECRET_DEV } = require('../utils/config');
 
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -80,7 +83,7 @@ const login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET);
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV);
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,

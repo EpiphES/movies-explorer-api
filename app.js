@@ -10,7 +10,8 @@ const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
-const { PORT, MONGO_URI } = require('./utils/constants');
+const { NODE_ENV, PORT, MONGO_URI } = require('./utils/constants');
+const { MONGO_URI_DEV } = require('./utils/config');
 
 const app = express();
 
@@ -40,7 +41,7 @@ app.use(errors());
 app.use(errorHandler);
 
 async function main() {
-  await mongoose.connect(MONGO_URI, {
+  await mongoose.connect(NODE_ENV === 'production' ? MONGO_URI : MONGO_URI_DEV, {
     useNewUrlParser: true,
     useUnifiedTopology: false,
   });
