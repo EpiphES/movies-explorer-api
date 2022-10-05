@@ -68,8 +68,8 @@ const deleteMovie = (req, res, next) => {
       if (movie.owner._id.toString() !== req.user._id) {
         throw new ForbiddenError(forbiddenMovieDeleteMessage);
       }
-      Movie.findByIdAndDelete(req.params.cardId)
-        .then((mycard) => res.send({ data: mycard }))
+      Movie.findByIdAndDelete(req.params._id)
+        .then((deletedMovie) => res.send({ data: deletedMovie }))
         .catch((err) => {
           if (err.name === 'CastError') {
             return next(new BadRequestError(badRequestMessage));
@@ -84,48 +84,6 @@ const deleteMovie = (req, res, next) => {
       return next(err);
     });
 };
-
-// const likeCard = (req, res, next) => {
-//   Card.findByIdAndUpdate(
-//     req.params.cardId,
-//     { $addToSet: { likes: req.user._id } },
-//     { new: true, runValidators: true },
-//   )
-//     .then((card) => {
-//       if (!card) {
-//         throw new NotFoundError(cardNotFoundMessage);
-//       }
-//       return Card.populate(card, { path: 'owner' });
-//     })
-//     .then((card) => res.send({ data: card }))
-//     .catch((err) => {
-//       if (err.name === 'CastError' || err.name === 'ValidationError') {
-//         return next(new BadRequestError(badRequestMessage));
-//       }
-//       return next(err);
-//     });
-// };
-
-// const dislikeCard = (req, res, next) => {
-//   Card.findByIdAndUpdate(
-//     req.params.cardId,
-//     { $pull: { likes: req.user._id } },
-//     { new: true },
-//   )
-//     .then((card) => {
-//       if (!card) {
-//         throw new NotFoundError(cardNotFoundMessage);
-//       }
-//       return Card.populate(card, { path: 'owner' });
-//     })
-//     .then((card) => res.send({ data: card }))
-//     .catch((err) => {
-//       if (err.name === 'CastError' || err.name === 'ValidationError') {
-//         return next(new BadRequestError(badRequestMessage));
-//       }
-//       return next(err);
-//     });
-// };
 
 module.exports = {
   getMovies,
