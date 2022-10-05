@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const helmet = require('helmet');
 const router = require('./routes');
 const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -13,6 +14,9 @@ const { PORT, MONGO_URI } = require('./utils/constants');
 const app = express();
 
 app.use(express.json());
+
+app.use(helmet());
+
 app.use(cookieParser());
 
 app.use(
