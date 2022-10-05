@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const rateLimiter = require('./middlewares/rateLimiter');
+const rateLimiter = require('./middlewares/rateLimiter');
 const { NODE_ENV, PORT, MONGO_URI } = require('./utils/constants');
 const { MONGO_URI_DEV } = require('./utils/config');
 
@@ -30,7 +30,7 @@ app.use(
 
 app.use(requestLogger);
 
-// app.use(rateLimiter);
+app.use(rateLimiter);
 
 app.use('/', router);
 
