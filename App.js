@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-// const cors = require("cors");
+const cors = require('cors');
 const router = require('./routes');
 const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -15,15 +15,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(
-//   cors({
-//     origin: [
-//       "http://epiphany.nomoredomains.sbs",
-//       "https://epiphany.nomoredomains.sbs",
-//     ],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  }),
+);
 app.use(requestLogger);
 app.use('/', router);
 app.use(errorLogger);
