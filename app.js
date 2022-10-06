@@ -46,9 +46,6 @@ async function main() {
     useUnifiedTopology: false,
   });
   await app.listen(PORT);
-
-  // eslint-disable-next-line no-console
-  console.log(`App listening on port ${PORT}`);
 }
 
 main();
