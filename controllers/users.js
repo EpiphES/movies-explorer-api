@@ -100,7 +100,11 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
   res
-    .clearCookie('jwt')
+    .clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    })
     .send({
       status: 'Bye!',
     });
